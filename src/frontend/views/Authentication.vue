@@ -4,7 +4,8 @@
       class="authenticator__form"
       :authConfig="authConfig"
       data-test="authenticator"
-    ></amplify-authenticator>
+    >
+    </amplify-authenticator>
   </div>
 </template>
 
@@ -38,8 +39,12 @@ export default {
   data() {
     return {
       authConfig: {
+        signInConfig: {
+          header: "Sign into A-Wing"
+        },
         signUpConfig: {
           defaultCountryCode: "44",
+          header: "Sign up with A-Wing",
           signUpFields: [
             {
               label: "First name",
