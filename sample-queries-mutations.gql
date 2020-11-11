@@ -3,12 +3,12 @@
 
 mutation flight1 {
     createFlight(input:{
-        departureDate: "2019-12-02T08:00+0000",
+        departureDate: "2020-12-02T08:00+0000",
         departureAirportCode: "LGW",
         departureAirportName: "London Gatwick",
         departureCity: "London",
         departureLocale: "Europe/London",
-        arrivalDate: "2019-12-02T10:15+0000",
+        arrivalDate: "2020-12-02T10:15+0000",
         arrivalAirportCode: "MAD",
         arrivalAirportName: "Madrid Barajas",
         arrivalCity: "Madrid",
@@ -24,12 +24,12 @@ mutation flight1 {
 
 mutation flight2 {
     createFlight(input:{
-        departureDate: "2019-12-02T10:30+0000",
+        departureDate: "2020-12-02T10:30+0000",
         departureAirportCode: "LGW",
         departureAirportName: "London Gatwick",
         departureCity: "London",
         departureLocale: "Europe/London",
-        arrivalDate: "2019-12-02T12:45+0000",
+        arrivalDate: "2020-12-02T12:45+0000",
         arrivalAirportCode: "MAD",
         arrivalAirportName: "Madrid Barajas",
         arrivalCity: "Madrid",
@@ -45,12 +45,12 @@ mutation flight2 {
 
 mutation flight3 {
     createFlight(input:{
-        departureDate: "2019-12-02T12:00+0000",
+        departureDate: "2020-12-02T12:00+0000",
         departureAirportCode: "LGW",
         departureAirportName: "London Gatwick",
         departureCity: "London",
         departureLocale: "Europe/London",
-        arrivalDate: "2019-12-02T14:15+0000",
+        arrivalDate: "2020-12-02T14:15+0000",
         arrivalAirportCode: "MAD",
         arrivalAirportName: "Madrid Barajas",
         arrivalCity: "Madrid",
@@ -66,12 +66,12 @@ mutation flight3 {
 
 mutation flight4 {
     createFlight(input:{
-        departureDate: "2019-12-02T17:00+0000",
+        departureDate: "2020-12-02T17:00+0000",
         departureAirportCode: "LGW",
         departureAirportName: "London Gatwick",
         departureCity: "London",
         departureLocale: "Europe/London",
-        arrivalDate: "2019-12-02T19:15+0000",
+        arrivalDate: "2020-12-02T19:15+0000",
         arrivalAirportCode: "MAD",
         arrivalAirportName: "Madrid Barajas",
         arrivalCity: "Madrid",
@@ -84,68 +84,3 @@ mutation flight4 {
         id
     }
 }
-
-## Fetch all flights leaving at 10am - That uses a SCAN operation behind the scenes
-
-query {
-  listFlights(limit:2, filter: {
-    departureDate: {
-      beginsWith: "2019-12-02T10"
-    }
-  }){
-    items {
-      id,
-      departureDate
-    }
-  }
-}
-
-## Fetch all flights to Madrid from London Gatwick - That uses a QUERY operation behind the scenes
-
-query {
-  getFlightBySchedule(
-    arrivalAirportCodeDepartureDate: {
-      beginsWith: {
-        arrivalAirportCode: "MAD", 
-        departureDate: "2019-11-03"
-      }
-    }, 
-    departureAirportCode: "LGW"
-  )
-    {
-      nextToken
-      items {
-        id
-        departureDate
-      }
-    }
-}
-
-
-## Make a booking
-###
-
-mutation {
-  # auth user must be Admin
-  createBooking(input:{
-     status:UNCONFIRMED,
-     paymentToken: "adasdasd",
-     bookingOutboundFlightId: "flight-UUID-here"
-  }) {
-    id
-  }
-}
-
-## Fetch a booking
-query {
-  getBooking(id:"b46baf62-f9fe-4b0b-b2e3-741f5e11589d") 
-  # selection set
-  {
-    id
-	  outboundFlight {
-	    id
-      departureDate
-    }
-  }
-}
-
